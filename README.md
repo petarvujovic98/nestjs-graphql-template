@@ -79,7 +79,7 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-### Template
+## Template
 
 ## Stay in touch
 
@@ -89,7 +89,7 @@ $ yarn run test:cov
 
 This template is [MIT licensed](LICENSE).
 
-### Nest
+## Nest
 
 ## Support
 
