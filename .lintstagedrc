@@ -3,7 +3,7 @@
     "prettier --write",
     "git add"
   ],
-  "*": [
+  "*.ts": [
     "tslint -p tsconfig.json -c tslint.json --fix",
     "git add"
   ]
