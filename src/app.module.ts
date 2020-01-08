@@ -14,7 +14,11 @@ import { AuthModule } from './auth/auth.module'
       useFactory: (config: ConfigService) => config.get('database'),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql', playground: true }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: 'schema.gql',
+      playground: true,
+      context: ({ req }) => ({ req }),
+    }),
     AuthModule,
   ],
   providers: [AppService, AppResolver],
