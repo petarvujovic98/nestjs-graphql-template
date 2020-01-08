@@ -13,7 +13,7 @@ import { AppService } from './app.service'
       useFactory: (config: ConfigService) => config.get('database'),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),
+    GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql', playground: true }),
   ],
   providers: [AppService, AppResolver],
 })
