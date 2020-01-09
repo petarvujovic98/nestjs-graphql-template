@@ -4,6 +4,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
+import * as fastifyCookie from 'fastify-cookie'
 import { AppModule } from './app.module'
 
 declare const module: any
@@ -15,6 +16,8 @@ async function bootstrap() {
   )
 
   app.useGlobalPipes(new ValidationPipe())
+
+  app.use(fastifyCookie())
 
   await app.listen(3000)
 

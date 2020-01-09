@@ -1,5 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-jwt'
 
@@ -7,8 +6,8 @@ import { Strategy } from 'passport-jwt'
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
-      jwtFromRequest: (req: { cookies: { jwt: string } }) =>
-        req && req.cookies ? req.cookies.jwt : null,
+      jwtFromRequest: (req: { cookies: { access_token: string } }) =>
+        req && req.cookies ? req.cookies.access_token : null,
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
     })
