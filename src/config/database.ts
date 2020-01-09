@@ -7,7 +7,7 @@ export default registerAs('database', () => ({
   database: process.env.TYPEORM_DATABASE,
   username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD,
-  entities: process.env.TYPEORM_ENTITIES.split(','),
+  entities: [process.env.TYPEORM_ENTITIES],
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   logging: process.env.TYPEORM_LOGGING === 'true',
 }))
