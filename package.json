@@ -1,8 +1,8 @@
 {
-  "name": "template",
+  "name": "vegelibri-users",
   "version": "0.0.1",
-  "description": "Template App",
-  "author": "Petar Vujović",
+  "description": "Vegelibri users microservice",
+  "author": "netboxify",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
