@@ -1,6 +1,6 @@
+import { ConfigService } from '@nestjs/config'
 import { Resolver } from '@nestjs/graphql'
 import { PostgresPubSub } from 'graphql-postgres-subscriptions'
-import { ConfigService } from 'nestjs-config'
 import { AppService } from './app.service'
 
 @Resolver() // TODO       <-- define resolver type
