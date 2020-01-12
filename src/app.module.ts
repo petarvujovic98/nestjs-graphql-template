@@ -28,5 +28,6 @@ import configs from './config/'
     AuthModule,
   ],
   providers: [AppService, AppResolver],
+  exports: [AppService],
 })
 export class AppModule {}
