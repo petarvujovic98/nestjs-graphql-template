@@ -1,5 +1,6 @@
 // * general configuration object
-import database from './database'
-import pubsub from './pubsub'
+import database from './database.config'
+import jwt from './jwt.config'
+import pubsub from './pubsub.config'
 
-export default [database, pubsub]
+export default [database, jwt, pubsub]
