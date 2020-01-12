@@ -7,4 +7,8 @@ export class ContextUser {
     public lastName: string,
     public roles: string[],
   ) {}
+
+  public hasRole(roles: string[]) {
+    return this.roles.some(role => roles.includes(role))
+  }
 }
