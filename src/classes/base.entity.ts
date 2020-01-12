@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Field, ID } from 'type-graphql'
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +8,6 @@ import {
 
 // * this is the base class for all entities
 
-@ObjectType()
 export abstract class Base {
   @PrimaryGeneratedColumn('uuid')
   @Field(type => ID)
@@ -22,11 +21,11 @@ export abstract class Base {
   @Field()
   updatedDate!: Date
 
-  @Column()
+  @Column({ default: '' })
   @Field()
   createdBy!: string
 
-  @Column()
+  @Column({ default: '' })
   @Field()
   lastUpdatedBy!: string
 }
