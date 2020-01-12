@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
 import { AppModule } from './app.module'
+import { GqlAuthGuard } from './auth/gql.guard'
 
 declare const module: any
 
@@ -15,6 +16,8 @@ async function bootstrap() {
   )
 
   app.useGlobalPipes(new ValidationPipe())
+
+  app.useGlobalGuards(new GqlAuthGuard())
 
   await app.listen(3000)
 
