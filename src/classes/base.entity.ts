@@ -10,22 +10,22 @@ import {
 
 export abstract class Base {
   @PrimaryGeneratedColumn('uuid')
-  @Field(type => ID)
+  @Field(type => ID, { description: 'UUID of the object' })
   id!: string
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  @Field()
+  @Field({ description: 'Date when the object was created' })
   createdDate!: Date
 
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  @Field()
+  @Field({ description: 'Date when the object was last updated' })
   updatedDate!: Date
 
   @Column({ default: '' })
-  @Field()
+  @Field({ description: 'User that created the object' })
   createdBy!: string
 
   @Column({ default: '' })
-  @Field()
+  @Field({ description: 'User that last updated the object' })
   lastUpdatedBy!: string
 }
