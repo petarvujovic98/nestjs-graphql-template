@@ -4,15 +4,26 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
+import * as fastifyCompress from 'fastify-compress'
+import * as fastifyHelmet from 'fastify-helmet'
+import * as fastifyRateLimit from 'fastify-rate-limit'
 import { AppModule } from './app.module'
 import { GqlAuthGuard } from './auth/gql.guard'
 
 declare const module: any
 
 async function bootstrap() {
+  const fastifyAdapter = new FastifyAdapter({ logger: true })
+  fastifyAdapter.register(fastifyCompress)
+  fastifyAdapter.register(fastifyHelmet)
+  fastifyAdapter.register(fastifyRateLimit, {
+    max: 100,
+    timeWindow: '1 minute',
+  })
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    fastifyAdapter,
   )
 
   app.useGlobalPipes(new ValidationPipe())
