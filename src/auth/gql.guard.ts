@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthGuard } from '@nestjs/passport'
-import { ContextUser } from '../dto/contextUser.object'
+import { ContextUser } from '../dto/context-user.object'
 
 @Injectable()
 export class GqlAuthGuard extends AuthGuard('jwt') {
