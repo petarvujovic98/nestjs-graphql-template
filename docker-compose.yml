@@ -2,22 +2,22 @@ version: '3.3'
 
 services:
   PostgreSQL:
-    container_name: PostgreSQL_Users
+    container_name: PostgreSQL_App
     image: postgres:12-alpine
     ports:
       - '5531:5432'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=
-      - POSTGRES_DB=users
+      - POSTGRES_DB=app
     volumes:
       - ./docker-volumes/postgresql:/var/lib/postgresql
     networks:
-      - vegelibri_users
+      - vegelibri_app
 
-  Users:
-    container_name: Users
-    image: users
+  App:
+    container_name: App
+    image: app
     restart: on-failure
     env_file: .env
     ports:
@@ -25,8 +25,8 @@ services:
     depends_on:
       - 'PostgreSQL'
     networks:
-      - vegelibri_users
+      - vegelibri_app
 
 networks:
-  vegelibri_users:
+  vegelibri_app:
     external: true
