@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node,linux,macos,dotenv,windows,jetbrains+all,visualstudiocode
 
 ### dotenv ###
-# .env
+.env
 
 ### JetBrains+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
