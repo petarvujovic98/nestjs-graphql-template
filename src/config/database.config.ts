@@ -10,4 +10,8 @@ export default registerAs('database', () => ({
   entities: [process.env.TYPEORM_ENTITIES],
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   logging: process.env.TYPEORM_LOGGING === 'true',
+  migrations: [process.env.TYPEORM_MIGRATIONS],
+  cli: {
+    migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
+  },
 }))
