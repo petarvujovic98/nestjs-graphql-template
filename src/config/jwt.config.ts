@@ -1,13 +1,12 @@
 import { registerAs } from '@nestjs/config'
-import { ExtractJwt } from 'passport-jwt'
-// * configuration object for the jwt strategy
+// * configuration object for the jwt module
 export default registerAs('jwt', () => ({
-  passport: {
-    secretOrKey: process.env.JWT_PUBLIC_KEY,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-    issuer: process.env.JWT_ISSUER,
+  publicKey: process.env.JWT_PUBLIC_KEY,
+  verifyOptions: {
+    algorithm: process.env.JWT_ALGORITHM,
     audience: process.env.JWT_AUDIENCE,
-    algorithms: [process.env.JWT_ALGORITHM],
+    issuer: process.env.JWT_ISSUER,
     ignoreExpiration: process.env.JWT_IGNORE_EXPIRATION,
+    maxAge: process.env.JWT_MAX_AGE,
   },
 }))

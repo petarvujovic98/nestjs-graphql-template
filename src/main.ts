@@ -28,8 +28,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())
 
-  app.useGlobalGuards(new GqlAuthGuard())
-
   await app.listen(3000, '0.0.0.0')
 
   if (module.hot) {

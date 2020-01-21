@@ -1,25 +1,41 @@
-import { ExecutionContext, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { AuthGuard } from '@nestjs/passport'
-import { ContextUser } from '../dto/context-user.object'
+import { AuthService } from './auth.service'
 
 @Injectable()
-export class GqlAuthGuard extends AuthGuard('jwt') {
+export class GqlAuthGuard implements CanActivate {
+  constructor(private readonly authService: AuthService) {}
+
   canActivate(context: ExecutionContext) {
     const roles = new Reflector().get<string[]>('roles', context.getHandler())
     if (!roles) {
       return true
     }
     const request = this.getRequest(context)
-    const user: ContextUser = request.user
-    return (
-      super.canActivate(new ExecutionContextHost([request])) &&
-      user &&
-      user.roles &&
-      user.hasRole(roles)
-    )
+    const authHeader = request.headers.authorization as string
+
+    if (!authHeader) {
+      throw new BadRequestException('Authorization header not found.')
+    }
+    const [type, token] = authHeader.split(' ')
+    if (type !== 'JWT') {
+      throw new BadRequestException(
+        `Authentication type 'JWT' required. Found '${type}'`,
+      )
+    }
+    const user = this.authService.validate(token)
+    if (user) {
+      request.user = user
+      return user && user.roles && user.hasRole(roles)
+    }
+    throw new UnauthorizedException(user)
   }
 
   getRequest(context: ExecutionContext) {

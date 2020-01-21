@@ -1,9 +1,19 @@
 import { Module } from '@nestjs/common'
-import { PassportModule } from '@nestjs/passport'
-import { JwtStrategy } from './jwt.strategy'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+import { AuthService } from './auth.service'
+import { GqlAuthGuard } from './gql.guard'
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
-  providers: [JwtStrategy],
+  imports: [
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) =>
+        configService.get('jwt'),
+      inject: [ConfigService],
+    }),
+  ],
+  providers: [GqlAuthGuard, AuthService],
+  exports: [GqlAuthGuard, AuthService],
 })
 export class AuthModule {}
