@@ -1,4 +1,5 @@
 import { registerAs } from '@nestjs/config'
+
 // * configuration object for the database
 export default registerAs('database', () => ({
   type: process.env.TYPEORM_CONNECTION,
@@ -11,7 +12,11 @@ export default registerAs('database', () => ({
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   logging: process.env.TYPEORM_LOGGING === 'true',
   migrations: [process.env.TYPEORM_MIGRATIONS],
+  migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN,
   cli: {
     migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
+  },
+  cache: {
+    duration: process.env.TYPEORM_CACHE_DURATION,
   },
 }))
