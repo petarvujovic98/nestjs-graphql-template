@@ -1,0 +1,8 @@
+FROM node:12-alpine AS develop
+WORKDIR /template
+COPY ./package.json ./
+COPY ./yarn.lock ./
+RUN yarn --force-lockfile
+COPY . .
+VOLUME [ "/template" ]
+CMD ["yarn", "run", "start:dev"]

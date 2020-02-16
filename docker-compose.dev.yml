@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  PostgreSQL:
+    container_name: PostgreSQL
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=template
+    volumes:
+      - ./docker-volumes/postgresql:/var/lib/postgresql
+    networks:
+      - template
+
+  Template:
+    container_name: template
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+      target: develop
+      cache_from:
+        - node:12-alpine
+        - template:1-dev
+    image: template:1-dev
+    restart: on-failure
+    volumes:
+      - ./:/template
+    env_file:
+      - .env
+    environment:
+      - TYPEORM_HOST=PostgreSQL
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    depends_on:
+      - 'PostgreSQL'
+    networks:
+      - template
+
+networks:
+  template:
