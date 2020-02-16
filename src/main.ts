@@ -4,11 +4,11 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
-import * as fastifyCompress from 'fastify-compress'
-import * as fastifyHelmet from 'fastify-helmet'
-import * as fastifyRateLimit from 'fastify-rate-limit'
+import fastifyCompress = require('fastify-compress')
+import fastifyHelmet = require('fastify-helmet')
+import fastifyRateLimit = require('fastify-rate-limit')
+
 import { AppModule } from './app.module'
-import { GqlAuthGuard } from './auth/gql.guard'
 
 declare const module: any
 
@@ -28,7 +28,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())
 
-  await app.listen(3000, '0.0.0.0')
+  const port = parseInt(process.env.PORT, 10)
+  await app.listen(port || 3000, '0.0.0.0')
 
   if (module.hot) {
     module.hot.accept()
