@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_INTERCEPTOR } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { AppResolver } from './app.resolver'
-import { AppService } from './app.service'
+
 import { AuthModule } from './auth/auth.module'
+import { LoaderInterceptor } from './common'
 import configs from './config/'
+import { ExampleModule } from './example/example.module'
 
 @Module({
   imports: [
@@ -25,8 +27,8 @@ import configs from './config/'
       context: ({ req }) => ({ req }),
     }),
     AuthModule,
+    ExampleModule,
   ],
-  providers: [AppService, AppResolver],
-  exports: [AppService],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: LoaderInterceptor }],
 })
 export class AppModule {}
