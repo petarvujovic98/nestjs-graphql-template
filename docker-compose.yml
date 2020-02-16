@@ -1,32 +1,42 @@
-version: '3.3'
+version: '3.7'
 
 services:
   PostgreSQL:
-    container_name: PostgreSQL_App
+    container_name: PostgreSQL
     image: postgres:12-alpine
-    ports:
-      - '5531:5432'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=
-      - POSTGRES_DB=app
+      - POSTGRES_DB=template
     volumes:
       - ./docker-volumes/postgresql:/var/lib/postgresql
     networks:
-      - vegelibri_app
+      - template
 
-  App:
-    container_name: App
-    image: app
+  Template:
+    container_name: template
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: template
+      cache_from:
+        - node:12-alpine
+        - template:1-prod
+    image: template:1-prod
     restart: on-failure
-    env_file: .env
+    env_file:
+      - .env
+    environment:
+      - TYPEORM_HOST=PostgreSQL
     ports:
-      - '3000:3000'
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
     depends_on:
       - 'PostgreSQL'
     networks:
-      - vegelibri_app
+      - template
 
 networks:
-  vegelibri_app:
-    external: true
+  template:
