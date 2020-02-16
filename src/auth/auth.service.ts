@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { ContextUser } from './../dto/context-user.object'
+
+import { ContextUser } from '../common'
 
 @Injectable()
 export class AuthService {

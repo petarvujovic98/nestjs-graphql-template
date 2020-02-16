@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
+
 import { AuthService } from './auth.service'
 
 @Injectable()
@@ -32,7 +33,7 @@ export class GqlAuthGuard implements CanActivate {
     }
     const user = this.authService.validate(token)
     if (user) {
-      request.user = user
+      request.req.user = user
       return user && user.roles && user.hasRole(roles)
     }
     throw new UnauthorizedException(user)
