@@ -9,9 +9,9 @@ import {
 // * this is the base class for all entities
 
 export abstract class Base {
-  @PrimaryGeneratedColumn('uuid')
-  @Field(type => ID, { description: 'UUID of the object' })
-  id!: string
+  @PrimaryGeneratedColumn('increment')
+  @Field(() => ID, { description: 'ID of the object' })
+  id!: number
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   @Field({ description: 'Date when the object was created' })
