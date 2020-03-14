@@ -1,3 +1,0 @@
-{
-  "migration": "src/migrations/*.ts"
-}
