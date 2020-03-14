@@ -9,8 +9,7 @@ import { GqlAuthGuard } from './gql.guard'
   imports: [
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) =>
-        configService.get('jwt'),
+      useFactory: (configService: ConfigService) => configService.get('jwt'),
       inject: [ConfigService],
     }),
   ],

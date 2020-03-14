@@ -14,27 +14,30 @@ import { AuthService } from './auth.service'
 export class GqlAuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
 
-  canActivate(context: ExecutionContext) {
+  canActivate(context: ExecutionContext): boolean {
     const roles = new Reflector().get<string[]>('roles', context.getHandler())
-    if (!roles) {
-      return true
-    }
     const request = this.getRequest(context)
     const authHeader = request.headers.authorization as string
 
     if (!authHeader) {
-      throw new BadRequestException('Authorization header not found.')
+      if (roles) {
+        throw new BadRequestException('Authorization header not found.')
+      }
+      return true
     }
+
     const [type, token] = authHeader.split(' ')
-    if (type !== 'JWT') {
-      throw new BadRequestException(
-        `Authentication type 'JWT' required. Found '${type}'`,
-      )
+    if (type !== 'JWT' && roles) {
+      throw new BadRequestException(`Authentication type 'JWT' required. Found '${type}'`)
     }
+
     const user = this.authService.validate(token)
-    if (user) {
-      request.req.user = user
-      return user && user.roles && user.hasRole(roles)
+
+    if (user || !roles) {
+      request.user = user
+      return !roles
+        ? true
+        : user && user.roles && user.roles.some(role => roles.includes(role))
     }
     throw new UnauthorizedException(user)
   }
