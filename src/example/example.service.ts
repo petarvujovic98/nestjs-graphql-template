@@ -15,8 +15,12 @@ export class ExampleService {
   // TODO                 <-- define service constructor and methods
 
   async example(): Promise<Example> {
+    const exampleOne = await this.exampleRepository.findOne()
+    if (exampleOne) {
+      return exampleOne
+    }
     const example = new Example()
     example.message = 'Hello World!'
-    return example
+    return await this.exampleRepository.save(example)
   }
 }

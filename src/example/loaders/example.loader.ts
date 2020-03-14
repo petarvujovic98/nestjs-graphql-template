@@ -7,11 +7,11 @@ import { Example } from '../classes'
 
 @Injectable()
 export class ExampleLoader implements ILoader {
-  public generateDataLoader(): DataLoader<string, Example> {
-    return new DataLoader<string, Example>(this.findById)
+  public generateDataLoader(): DataLoader<number, Example> {
+    return new DataLoader<number, Example>(this.findById)
   }
 
-  private async findById(ids: string[]): Promise<Example[]> {
+  private async findById(ids: number[]): Promise<Example[]> {
     const examples = await getRepository(Example).findByIds(ids)
     return ids.map(id => examples.find(example => example.id === id))
   }
