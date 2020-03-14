@@ -26,7 +26,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework template repository for [TypeORM](https://github.com/typeorm/typeorm), [GraphQL](https://graphql.org/) and event subscriptions with [PostgreSQL](https://www.postgresql.org/download/).
+[Nest](https://github.com/nestjs/nest) framework template repository for [TypeORM](https://github.com/typeorm/typeorm), [GraphQL](https://graphql.org/) using [PostgreSQL](https://www.postgresql.org/download/).
 
 ## Installation
 
@@ -44,39 +44,80 @@ $ npm install
 
 ```bash
 # build
-$ yarn run build
+$ yarn build
 
 # hot build
-$ yarn run build:hot
+$ yarn build:hot
+
+# build docker image
+$ yarn build:image
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
+$ yarn start
 
 # hot reload
-$ yarn run start:hot
+$ yarn start:hot
 
 # watch mode
-$ yarn run start:dev
+$ yarn start:dev
 
 # production mode
-$ yarn run start:prod
+$ yarn start:prod
+
+# docker dev mode
+$ yarn compose:dev
+
+# docker production build mode
+$ yarn compose:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ yarn run test
+$ yarn test
 
 # e2e tests
-$ yarn run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ yarn run test:cov
+$ yarn test:cov
+```
+
+## Database
+
+```bash
+# use typeorm cli
+$ yarn typeorm
+
+# generate migrations
+$ yarn db:gen
+
+# create empty migrations
+$ yarn db:create
+
+# run migrations
+$ yarn db:migrate
+
+# run seeders
+$ yarn seed
+```
+
+## Code factoring
+
+```bash
+# run prettier
+$ yarn format
+
+# run eslint
+$ yarn lint
+
+# run eslint and prettier
+$ yarn fix
 ```
 
 # Template
