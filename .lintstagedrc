@@ -1,7 +1,7 @@
 {
   "**/{src,apps,libs,test}/**/*.{ts,tsx}": [
-    "prettier --write",
     "eslint --fix",
+    "prettier --write",
     "git add"
   ]
 }
