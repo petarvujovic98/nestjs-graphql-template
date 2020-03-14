@@ -6,27 +6,28 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AuthModule } from './auth/auth.module'
 import { LoaderInterceptor } from './common'
-import configs from './config/'
+import { main } from './config'
 import { ExampleModule } from './example/example.module'
+import { HealthCheckModule } from './health/healthCheck.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: configs,
+      load: main,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) =>
-        configService.get('database'),
+      useFactory: (configService: ConfigService) => configService.get('database'),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
-      playground: true,
-      context: ({ req }) => ({ req }),
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => configService.get('graphql'),
+      inject: [ConfigService],
     }),
     AuthModule,
+    HealthCheckModule,
     ExampleModule,
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: LoaderInterceptor }],
