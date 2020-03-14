@@ -1,8 +1,10 @@
-FROM node:12-alpine AS develop
+FROM node:12-buster-slim AS develop
 WORKDIR /template
 COPY ./package.json ./
 COPY ./yarn.lock ./
 RUN yarn --force-lockfile
+RUN yarn add --force bcrypt --build-from-source
 COPY . .
+EXPOSE 3000
 VOLUME [ "/template" ]
 CMD ["yarn", "run", "start:dev"]

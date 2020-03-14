@@ -4,11 +4,11 @@ services:
   PostgreSQL:
     container_name: PostgreSQL
     image: postgres:12-alpine
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=
-      - POSTGRES_DB=template
     volumes:
+      # Initialize the database with the role and database in the init.sh file
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/1.sh
+      # Uncomment the next line if you need an UUID extension in your database
+      # - ./sql/uuidextension.sh:/docker-entrypoint-initdb.d/2.sh
       - ./docker-volumes/postgresql:/var/lib/postgresql
     networks:
       - template
