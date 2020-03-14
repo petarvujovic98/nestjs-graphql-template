@@ -26,7 +26,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework template repository for [TypeORM](https://github.com/typeorm/typeorm), [GraphQL](https://graphql.org/) using [PostgreSQL](https://www.postgresql.org/download/).
+[Nest](https://github.com/nestjs/nest) framework template repository for [TypeORM](https://typeorm.io/), [GraphQL](https://graphql.org/) using [PostgreSQL](https://www.postgresql.org/download/).
 
 ## Installation
 
