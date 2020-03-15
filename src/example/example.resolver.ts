@@ -9,7 +9,7 @@ export class ExampleResolver {
 
   // TODO                 <-- define queries, mutations and subscriptions
 
-  @Query(() => [Example], { description: 'Example resolver' })
+  @Query(() => Example, { description: 'Example resolver' })
   async example(): Promise<Example> {
     return await this.exampleService.example()
   }

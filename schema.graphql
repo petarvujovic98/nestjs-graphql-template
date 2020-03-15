@@ -10,5 +10,5 @@ type Example {
 
 type Query {
   """Example resolver"""
-  example: [Example!]!
+  example: Example!
 }
