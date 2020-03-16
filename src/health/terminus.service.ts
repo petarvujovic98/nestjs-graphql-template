@@ -22,11 +22,11 @@ export class TerminusOptionsService implements TerminusOptionsFactory {
     const healthEndpoint: TerminusEndpoint = {
       url: '/health',
       healthIndicators: [
-        async () => this.dns.pingCheck('google', 'https://google.com'),
-        async () => this.typeorm.pingCheck('database'),
-        async () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
-        async () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
-        async () =>
+        () => this.dns.pingCheck('google', 'https://google.com'),
+        () => this.typeorm.pingCheck('database'),
+        () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
+        () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
+        () =>
           this.disk.checkStorage('storage', {
             thresholdPercent: 50,
             path: '/',
