@@ -68,9 +68,9 @@
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.11",
-    "@nestjs/cli": "^6.9.0",
-    "@nestjs/schematics": "^6.7.0",
-    "@nestjs/testing": "^6.7.1",
+    "@nestjs/cli": "^7.5.3",
+    "@nestjs/schematics": "^7.2.2",
+    "@nestjs/testing": "^7.5.5",
     "@types/bcrypt": "^3.0.0",
     "@types/faker": "^4.1.10",
     "@types/graphql-depth-limit": "^1.1.2",
