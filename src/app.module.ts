@@ -5,10 +5,11 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AuthModule } from './auth/auth.module'
-import { LoaderInterceptor } from './common'
 import { main } from './config'
 import { ExampleModule } from './example/example.module'
 import { HealthCheckModule } from './health/healthCheck.module'
+
+import { LoaderInterceptor, ComplexityPlugin } from '@common'
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { HealthCheckModule } from './health/healthCheck.module'
     HealthCheckModule,
     ExampleModule,
   ],
-  providers: [{ provide: APP_INTERCEPTOR, useClass: LoaderInterceptor }],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: LoaderInterceptor }, ComplexityPlugin],
 })
 export class AppModule {}
