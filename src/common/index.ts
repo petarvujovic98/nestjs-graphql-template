@@ -1,5 +1,7 @@
+export * from './generators'
 export * from './classes'
 export * from './decorators'
 export * from './dto'
 export * from './interceptors'
 export * from './interfaces'
+export * from './plugins'
