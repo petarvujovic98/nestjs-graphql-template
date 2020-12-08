@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { ClientOpts } from 'redis'
 
 // * configuration object for the database
 export default registerAs(
@@ -7,7 +8,7 @@ export default registerAs(
   (): TypeOrmModuleOptions => ({
     type: 'postgres',
     host: process.env.TYPEORM_HOST,
-    port: parseInt(process.env.TYPEORM_PORT, 10),
+    port: +process.env.TYPEORM_PORT,
     database: process.env.TYPEORM_DATABASE,
     username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
@@ -16,11 +17,16 @@ export default registerAs(
     logging: process.env.TYPEORM_LOGGING === 'true',
     migrations: [process.env.TYPEORM_MIGRATIONS],
     migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'true',
+    keepConnectionAlive: true,
     cli: {
       migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
     },
     cache: {
-      duration: parseInt(process.env.TYPEORM_CACHE_DURATION, 10),
+      type: 'redis',
+      options: {
+        host: process.env.REDIS_HOST,
+        port: +process.env.REDIS_PORT,
+      } as ClientOpts,
     },
     autoLoadEntities: true,
   }),
