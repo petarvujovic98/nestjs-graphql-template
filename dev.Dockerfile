@@ -1,4 +1,4 @@
-FROM node:12-buster-slim AS develop
+FROM node:14.15.1-buster-slim AS develop
 WORKDIR /template
 COPY ./package.json ./
 COPY ./yarn.lock ./

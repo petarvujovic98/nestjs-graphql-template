@@ -7,8 +7,9 @@ export default registerAs(
   'graphql',
   (): GqlModuleOptions => ({
     autoSchemaFile: process.env.GRAPHQL_SCHEMA_FILE,
+    sortSchema: true,
     playground: process.env.GRAPHQL_PLAYGROUND === 'true',
-    context: ctx => ctx,
+    context: (ctx) => ctx,
     installSubscriptionHandlers: true,
     validationRules: [depthLimit(parseInt(process.env.GRAPHQL_DEPTH_LIMIT, 10))],
   }),

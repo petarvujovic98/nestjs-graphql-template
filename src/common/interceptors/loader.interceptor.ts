@@ -1,9 +1,4 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common'
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { Observable } from 'rxjs'
 
@@ -18,7 +13,7 @@ export class LoaderInterceptor implements NestInterceptor {
       ExampleLoader: new ExampleLoader().generateDataLoader(),
     }
 
-    Object.keys(loaders).forEach(key => (ctx[key] = loaders[key]))
+    Object.keys(loaders).forEach((key) => (ctx[key] = loaders[key]))
 
     return next.handle()
   }

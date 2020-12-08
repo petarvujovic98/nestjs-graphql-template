@@ -2,14 +2,16 @@ import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
-import fastifyCompress = require('fastify-compress')
-import fastifyHelmet = require('fastify-helmet')
-import fastifyRateLimit = require('fastify-rate-limit')
-import fastifyCookie = require('fastify-cookie')
-import fastifyCors = require('fastify-cors')
+import compression from 'fastify-compress'
+import fastifyCookie from 'fastify-cookie'
+import cors from 'fastify-cors'
+// import csrf from 'fastify-csrf'
+import helmet from 'fastify-helmet'
+import rateLimit from 'fastify-rate-limit'
 
 import { AppModule } from './app.module'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const module: any
 
 async function bootstrap() {
@@ -20,14 +22,12 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService)
 
-  app.register(fastifyCompress)
-  app.register(fastifyHelmet)
-  app.register(fastifyRateLimit, {
-    max: configService.get('rateLimit.max'),
-    timeWindow: configService.get('rateLimit.timeWindow'),
-  })
-  app.register(fastifyCookie)
-  app.register(fastifyCors, { origin: configService.get('app.origins') })
+  app.register(helmet)
+  app.register(compression, { encodings: ['gzip', 'deflate'] })
+  app.register(rateLimit, configService.get('app.rateLimit'))
+  app.register(fastifyCookie, { secret: configService.get('app.secret') })
+  // app.register(csrf, { cookieOpts: { signed: true } })
+  app.register(cors, { origin: configService.get('app.origins') })
 
   app.useGlobalPipes(new ValidationPipe())
 

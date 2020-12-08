@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common'
-import DataLoader = require('dataloader')
+import DataLoader from 'dataloader'
 import { getRepository } from 'typeorm'
 
-import { ILoader } from '../../common'
 import { Example } from '../classes'
+
+import { ILoader } from '@common'
 
 @Injectable()
 export class ExampleLoader implements ILoader {
@@ -13,6 +14,6 @@ export class ExampleLoader implements ILoader {
 
   private async findById(ids: number[]): Promise<Example[]> {
     const examples = await getRepository(Example).findByIds(ids)
-    return ids.map(id => examples.find(example => example.id === id))
+    return ids.map((id) => examples.find((example) => example.id === id))
   }
 }

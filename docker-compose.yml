@@ -1,42 +1,59 @@
 version: '3.7'
 
 services:
-  PostgreSQL:
-    container_name: PostgreSQL
+  postgreSQL:
+    container_name: postgreSQL
     image: postgres:12-alpine
     volumes:
       # Initialize the database with the role and database in the init.sh file
       - ./sql/docker/init.sh:/docker-entrypoint-initdb.d/1.sh
       # Uncomment the next line if you need an UUID extension in your database
       # - ./sql/docker/uuidextension.sh:/docker-entrypoint-initdb.d/2.sh
-      - ./docker-volumes/postgresql:/var/lib/postgresql
-    networks:
-      - template
+      - postgres_volume:/var/lib/postgresql
 
-  Template:
-    container_name: template
+  redis:
+    container_name: redis
+    image: redis:6.0.9-alpine
+    volumes:
+      - redis_volume:/data
+
+  template-dev:
+    <<: &template
+      image: template:1-dev
+      restart: on-failure
+      env_file:
+        - .env
+      environment:
+        - TYPEORM_HOST=postgreSQL
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+      ports:
+        - "3000:3000"
+      depends_on:
+        - 'postgreSQL'
+        - 'redis'
+    container_name: template-dev
+    build:
+      context: ./
+      dockerfile: dev.Dockerfile
+      target: develop
+      cache_from:
+        - node:14.15.1-buster-slim
+        - template:1-dev
+    volumes:
+      - ./:/template
+
+  template-prod:
+    <<: *template
+    container_name: template-prod
     build:
       context: ./
       dockerfile: Dockerfile
       target: template
       cache_from:
-        - node:12-alpine
+        - node:14.15.1-buster-slim
         - template:1-prod
-    image: template:1-prod
-    restart: on-failure
-    env_file:
-      - .env
-    environment:
-      - TYPEORM_HOST=PostgreSQL
-    ports:
-      - target: 3000
-        published: 3000
-        protocol: tcp
-        mode: host
-    depends_on:
-      - 'PostgreSQL'
-    networks:
-      - template
 
-networks:
-  template:
+volumes:
+  postgres_volume:
+  redis_volume:
