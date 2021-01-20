@@ -48,7 +48,7 @@
     "fastify-compress": "^2.0.0",
     "fastify-cookie": "^3.5",
     "fastify-cors": "^3.0.2",
-    "fastify-csrf": "^1",
+    "fastify-csrf": "^3",
     "fastify-helmet": "^3.0.2",
     "fastify-rate-limit": "^3",
     "graphql": "^15.4.0",
